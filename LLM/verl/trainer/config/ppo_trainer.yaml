@@ -147,8 +147,6 @@ algorithm:
 Length_weight:
   length_weight: False
   correct_score: 1.01
-  beta: 0.5
-  p: 0.5
   lamda: 0.1
   max_length_threshold: 4054
 

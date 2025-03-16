@@ -15,8 +15,6 @@ python3 -m verl.trainer.main_ppo \
     algorithm.adv_estimator=grpo \
     Length_weight.length_weight=True \
     Length_weight.correct_score=1.01 \
-    Length_weight.beta=0 \
-    Length_weight.p=0 \
     Length_weight.lamda=0.1 \
     Length_weight.max_length_threshold=3900 \
     data.train_files=[${DATA_PATH}/3ppl_train_ins/train.parquet,${DATA_PATH}/4ppl_train_ins/train.parquet,${DATA_PATH}/5ppl_train_ins/train.parquet,${DATA_PATH}/6ppl_train_ins/train.parquet,${DATA_PATH}/7ppl_train_ins/train.parquet] \

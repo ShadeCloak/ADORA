@@ -122,8 +122,6 @@ def compute_advantage(
     num_repeat=1, 
     length_weight=False, 
     correct_score=1.01, 
-    beta=0.5, 
-    p=0.5, 
     lamda=0.1, 
     max_length_threshold=4054):
     # prepare response group
@@ -151,12 +149,10 @@ def compute_advantage(
         response_mask = attention_mask[:, -response_length:]
 
         if length_weight:
-            advantages, returns = core_algos.compute_grpo_outcome_advantage_length_weight_v2(token_level_rewards=token_level_rewards,
+            advantages, returns = core_algos.compute_grpo_outcome_advantage_ASORA(token_level_rewards=token_level_rewards,
                                                                         eos_mask=response_mask,
                                                                         index=index,
                                                                         correct_score=correct_score,
-                                                                        beta=beta,
-                                                                        p=p,
                                                                         lamda=lamda,
                                                                         max_length_threshold=max_length_threshold)
         else:
