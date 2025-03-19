@@ -6,8 +6,8 @@
 
 [![Hugging Face](https://img.shields.io/badge/ADORA-FFD21E?style=for-the-badge&logo=Huggingface&logoColor=000)](https://huggingface.co/AdoraRL) 
 [![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)](https://five-stetson-b51.notion.site/Steering-Model-How-to-Reinforcement-Learning-1a830cc0904681fa9df3e076b6557a3e) 
-[![Wandb LLM](https://img.shields.io/badge/WandbLLM-FFBE00?style=for-the-badge&logo=weightsandbiases&logoColor=000)](https://huggingface.co/AdoraRL) 
-[![Wandb VLM](https://img.shields.io/badge/WandbVLM-FFBE00?style=for-the-badge&logo=weightsandbiases&logoColor=000)](https://huggingface.co/AdoraRL) 
+[![Wandb LLM](https://img.shields.io/badge/WandbLLM-FFBE00?style=for-the-badge&logo=weightsandbiases&logoColor=000)](https://wandb.ai/luc4lj/reft-exp/reports/K-K-5ppl-GRPO-ADORA--VmlldzoxMTg3NDU5OA) 
+[![Wandb VLM](https://img.shields.io/badge/WandbVLM-FFBE00?style=for-the-badge&logo=weightsandbiases&logoColor=000)](https://wandb.ai/luc4lj/Qwen2.5-VL-7B-ppo-training/reports/Geometry3k-GRPO-ADORA--VmlldzoxMTg3NDQ3Mw?accessToken=t55aoj526rzc18n2kvum46vr0b6y8bjxmvbnls0829ekfezuta9l6so0bjxq7kyv) 
 
 </div>
 
