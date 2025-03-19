@@ -107,7 +107,7 @@ def compute_gae_advantage_return(token_level_rewards: torch.Tensor, values: torc
     return advantages, returns
 
 
-def compute_grpo_outcome_advantage_ASORA(
+def compute_grpo_outcome_advantage_ADORA(
     token_level_rewards: torch.Tensor,
     eos_mask: torch.Tensor,
     index: torch.Tensor,
@@ -117,44 +117,36 @@ def compute_grpo_outcome_advantage_ASORA(
     max_length_threshold: int = 4054
 ):
     """
-
     """
     device = token_level_rewards.device
     response_length_dim = token_level_rewards.shape[-1]
     
-    # 1. 基础参数计算
     scores = (token_level_rewards * (token_level_rewards != 0)).sum(dim=-1)
     response_lengths = eos_mask.sum(dim=1).float()
     original_scores = scores.clone()
 
-    # 2. 分组数据结构初始化
     id2original = defaultdict(list)
     id2length = defaultdict(list)
 
     with torch.no_grad():
         bsz = scores.shape[0]
         
-        # 3. 收集分组信息
         for i in range(bsz):
             idx = str(index[i])
             id2original[idx].append(original_scores[i].item())
             id2length[idx].append(response_lengths[i].item())
 
-        # 4. 预处理分组参数（含长度优势预计算）
         group_params = {}
         for idx in id2original:
             raw_scores = torch.tensor(id2original[idx], dtype=torch.float32, device=device)
             lengths = torch.tensor(id2length[idx], dtype=torch.float32, device=device)
             
-            # 正负样本划分
             pos_mask = raw_scores > correct_score
             neg_mask = (raw_scores <= correct_score) & (lengths < max_length_threshold)
             
-            # 关键参数计算
             pos_lengths = lengths[pos_mask]
             neg_lengths = lengths[neg_mask]
             
-            # 长度优势判断
             max_pos = pos_lengths.max().item() if pos_lengths.numel() > 0 else -float('inf')
             mean_neg = neg_lengths.mean().item() if neg_lengths.numel() > 0 else -float('inf')
             
@@ -163,12 +155,10 @@ def compute_grpo_outcome_advantage_ASORA(
                 'pos_count': pos_mask.sum().item(),
                 'pos_lengths': pos_lengths,
                 'neg_lengths': neg_lengths,
-                'length_advantage': (max_pos > mean_neg),  # 核心判断标志
                 'max_pos': max_pos,
                 'mean_neg': mean_neg
             }
 
-        # 5. 分组标准化
         unique_indices = list(group_params.keys())
         for idx in unique_indices:
             mask = torch.tensor([str(index[i]) == idx for i in range(bsz)], device=device)
@@ -179,90 +169,18 @@ def compute_grpo_outcome_advantage_ASORA(
                 std = group_scores.std()
                 scores[mask] = (group_scores - mean) / (std + epsilon)
             else:
-                scores[mask] = scores[mask]  # 单样本无需标准化
-
-        # 6. 自适应权重衰减（长度不占优时应用）
+                scores[mask] = scores[mask]
+                
         for idx in unique_indices:
             params = group_params[idx]
             if not params['length_advantage']:
                 mask = torch.tensor([str(index[i]) == idx for i in range(bsz)], device=device)
                 scores[mask] *= lamda
 
-        # 7. 序列格式扩展
         scores = scores.unsqueeze(-1).expand(-1, response_length_dim) * eos_mask
 
     return scores, scores
-
-
-def compute_grpo_outcome_advantage_length_weight(
-    token_level_rewards: torch.Tensor,
-    eos_mask: torch.Tensor,
-    index: torch.Tensor,
-    epsilon: float = 1e-6,
-    reward_threshold: float = 1.0,
-    lamda: float = 0.1
-):
-    # 保持原始代码结构
-    response_length = token_level_rewards.shape[-1]
-    non_zero_mask = (token_level_rewards != 0)
-    scores = (token_level_rewards * non_zero_mask).sum(dim=-1)
     
-    # 新增分组长度统计
-    response_lengths = eos_mask.sum(dim=-1)  # (bs,)
-    
-    id2score = defaultdict(list)
-    id2length = defaultdict(list)  # 新增长度记录
-    id2mean = {}
-    id2std = {}
-    id2weight = {}
-
-    with torch.no_grad():
-        bsz = scores.shape[0]
-        
-        # 分组收集分数和长度
-        for i in range(bsz):
-            idx = index[i]  # 直接使用张量索引
-            id2score[idx].append(scores[i])
-            id2length[idx].append(response_lengths[i])  # 记录长度
-            
-        # 分组处理逻辑
-        for idx in id2score:
-            # 原始标准化逻辑
-            if len(id2score[idx]) == 1:
-                id2mean[idx] = torch.tensor(0.0)
-                id2std[idx] = torch.tensor(1.0)
-            else:
-                id2mean[idx] = torch.mean(torch.stack(id2score[idx]))
-                id2std[idx] = torch.std(torch.stack(id2score[idx]))
-            
-            # 新增权重计算逻辑
-            group_scores = torch.stack(id2score[idx])
-            group_lengths = torch.stack(id2length[idx])
-            
-            # 高低奖励划分
-            high_mask = group_scores > reward_threshold
-            low_mask = ~high_mask
-            
-            # 计算统计量
-            max_high = group_lengths[high_mask].max() if high_mask.any() else -torch.inf
-            mean_low = group_lengths[low_mask].mean() if low_mask.any() else torch.inf
-            
-            # 权重决策
-            if (max_high > mean_low) or (not high_mask.any()):
-                id2weight[idx] = 1.0
-            else:
-                id2weight[idx] = lamda
-
-        # 应用权重和标准化
-        for i in range(bsz):
-            idx = index[i]
-            scores[i] = (scores[i] - id2mean[idx]) / (id2std[idx] + epsilon)
-            scores[i] *= id2weight[idx]  # 应用权重
-            
-        scores = scores.unsqueeze(-1).tile([1, response_length]) * eos_mask
-
-    return scores, scores
-
 # NOTE(sgm): this implementation only consider outcome supervision, where the reward is a scalar.
 def compute_grpo_outcome_advantage(token_level_rewards: torch.Tensor,
                                    eos_mask: torch.Tensor,
@@ -283,47 +201,69 @@ def compute_grpo_outcome_advantage(token_level_rewards: torch.Tensor,
         Returns: `(torch.Tensor)`
             shape: (bs, response_length)
     """
-    response_length = token_level_rewards.shape[-1] 
-    non_zero_mask = (token_level_rewards != 0)  
- 
+    response_length = token_level_rewards.shape[-1]
+    non_zero_mask = (token_level_rewards != 0)
     scores = (token_level_rewards * non_zero_mask).sum(dim=-1)
 
-    # 用字典存储每个prompt id对应的分数列表
-    id2score = defaultdict(list)  # Dict[str, List[float]]
-    id2mean = {}  # Dict[str, float] 
-    id2std = {}   # Dict[str, float]
+    id2score = defaultdict(list)
+    id2mean = {}
+    id2std = {}
 
     with torch.no_grad():
-        bsz = scores.shape[0]  # batch_size
-        
-        # 按prompt id分组收集分数
+        bsz = scores.shape[0]
         for i in range(bsz):
             id2score[index[i]].append(scores[i])
-            
-        # 计算每组内的均值和标准差
         for idx in id2score:
             if len(id2score[idx]) == 1:
-                # 只有一个样本时,均值为0,标准差为1
                 id2mean[idx] = torch.tensor(0.0)
                 id2std[idx] = torch.tensor(1.0)
             elif len(id2score[idx]) > 1:
-                # 多个样本时,计算均值和标准差
                 id2mean[idx] = torch.mean(torch.tensor(id2score[idx]))
                 id2std[idx] = torch.std(torch.tensor([id2score[idx]]))
             else:
                 raise ValueError(f"no score in prompt index: {idx}")
-                
-        # 对每个样本进行标准化
         for i in range(bsz):
             scores[i] = (scores[i] - id2mean[index[i]]) / (id2std[index[i]] + epsilon)
-            
-        # 将标准化后的分数扩展到序列长度维度,并用eos_mask遮盖
-        # shape: (batch_size, response_length)
         scores = scores.unsqueeze(-1).tile([1, response_length]) * eos_mask
 
-    # 返回标准化后的分数作为优势和回报
-    # shape: (batch_size, response_length), (batch_size, response_length)
     return scores, scores
+
+
+def compute_reinforce_plus_plus_outcome_advantage(token_level_rewards: torch.Tensor,
+                                   eos_mask: torch.Tensor,
+                                   gamma: torch.Tensor,
+                                   epsilon: float = 1e-6):
+    """
+    Compute advantage for Reinforce++, operating on Outcome reward 
+    (with only one scalar reward for each response).
+    Args:
+        token_level_rewards: `(torch.Tensor)`
+            shape: (bs, response_length)
+        eos_mask: `(torch.Tensor)`
+            shape: (bs, response_length)
+    
+    Returns:
+        advantages: `(torch.Tensor)`
+            shape: (bs, response_length)
+        Returns: `(torch.Tensor)`
+            shape: (bs, response_length)
+    """
+    # response_length = token_level_rewards.shape[-1]
+
+    with torch.no_grad():
+        returns = torch.zeros_like(token_level_rewards)
+        running_return = 0
+        
+        for t in reversed(range(token_level_rewards.shape[1])):
+            running_return = token_level_rewards[:, t] + gamma * running_return
+            returns[:, t] = running_return
+            # Reset after EOS
+            running_return = running_return * eos_mask[:, t]
+
+        advantages = verl_F.masked_whiten(returns, eos_mask)
+        advantages = advantages * eos_mask
+       
+    return advantages, returns
 
 
 def compute_rewards(token_level_scores, old_log_prob, ref_log_prob, kl_ratio):
@@ -443,3 +383,5 @@ def kl_penalty(logprob: torch.FloatTensor, ref_logprob: torch.FloatTensor, kl_pe
         raise NotImplementedError
 
     raise NotImplementedError
+
+

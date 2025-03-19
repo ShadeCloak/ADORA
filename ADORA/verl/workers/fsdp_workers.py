@@ -497,7 +497,7 @@ class ActorRolloutRefWorker(Worker):
             if hdfs_path is not None:
                 print(f'Uploading actor checkpoint to {hdfs_path}')
                 hdfs_io.makedirs(hdfs_path, exist_ok=True)
-                hdfs_io.copy(src=local_path, dst=hdfs_path)
+                hdfs_io.copy(src=local_path, dst=hdfs_path, dirs_exist_ok=True)
 
         torch.distributed.barrier()
         if self._is_offload_param:
@@ -754,7 +754,7 @@ class CriticWorker(Worker):
             if hdfs_path is not None:
                 print(f'Uploading critic checkpoint to {hdfs_path}')
                 hdfs_io.makedirs(hdfs_path, exist_ok=True)
-                hdfs_io.copy(src=local_path, dst=hdfs_path)
+                hdfs_io.copy(src=local_path, dst=hdfs_path, dirs_exist_ok=True)
 
         torch.distributed.barrier()
         if self._is_offload_param:

@@ -20,7 +20,7 @@ if __name__ == '__main__':
     parser.add_argument('--local_dir', default='/home/t2vg-a100-G4-43/data/kk/instruct/3ppl')
     parser.add_argument('--hdfs_dir', default=None)
     parser.add_argument('--data_path', default='/home/t2vg-a100-G4-43/mem-kk-logic/kk_train_data/3ppl.jsonl')
-    parser.add_argument('--train_size', type=int, default=0)
+    parser.add_argument('--train_size', type=int, default=900)
     parser.add_argument('--test_size', type=int, default=100)
     parser.add_argument('--template_type', type=str, default='qwen-instruct')
     
