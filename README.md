@@ -4,7 +4,10 @@
 
 # Advantage Dynamics via Online Rollout Adaptation
 
-[![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)](https://www.notion.so/Steering-Model-How-to-Reinforcement-Learning-1a830cc0904681fa9df3e076b6557a3e#1ba30cc090468017bb80c3a63521c162) [![Hugging Face](https://img.shields.io/badge/ADORA-fcd022?style=for-the-badge&logo=Huggingface&logoColor=000)](https://huggingface.co/AdoraRL)
+[![Hugging Face](https://img.shields.io/badge/ADORA-FFD21E?style=for-the-badge&logo=Huggingface&logoColor=000)](https://huggingface.co/AdoraRL) 
+[![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)](https://www.notion.so/Steering-Model-How-to-Reinforcement-Learning-1a830cc0904681fa9df3e076b6557a3e#1ba30cc090468017bb80c3a63521c162) 
+[![Wandb LLM](https://img.shields.io/badge/WandbLLM-FFBE00?style=for-the-badge&logo=weightsandbiases&logoColor=000)](https://huggingface.co/AdoraRL) 
+[![Wandb VLM](https://img.shields.io/badge/WandbVLM-FFBE00?style=for-the-badge&logo=weightsandbiases&logoColor=000)](https://huggingface.co/AdoraRL) 
 
 </div>
 
