@@ -45,7 +45,7 @@ def main(config):
     passes = 0
 
     total = len(dataset)
-    print("###", total)
+
     for i in range(total):
         response_lst = responses[i]
         data_source = data_sources[i]
@@ -61,7 +61,7 @@ def main(config):
 
         max_score = np.max(score_lst)
 
-        if max_score == 1:
+        if max_score == 3:
             passes += 1
 
     print(f'pass@5: {passes / total}')

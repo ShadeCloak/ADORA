@@ -149,7 +149,7 @@ def compute_advantage(
         response_mask = attention_mask[:, -response_length:]
 
         if length_weight:
-            advantages, returns = core_algos.compute_grpo_outcome_advantage_ASORA(token_level_rewards=token_level_rewards,
+            advantages, returns = core_algos.compute_grpo_outcome_advantage_ADORA(token_level_rewards=token_level_rewards,
                                                                         eos_mask=response_mask,
                                                                         index=index,
                                                                         correct_score=correct_score,
@@ -159,8 +159,19 @@ def compute_advantage(
             advantages, returns = core_algos.compute_grpo_outcome_advantage(token_level_rewards=token_level_rewards,
                                                                         eos_mask=response_mask,
                                                                         index=index)
-        data.batch['advantages'] = advantages  # (batch_size, response_length)
-        data.batch['returns'] = returns  # (batch_size, response_length)
+        data.batch['advantages'] = advantages
+        data.batch['returns'] = returns
+    elif adv_estimator == 'reinforce_plus_plus':
+        token_level_rewards = data.batch['token_level_rewards']
+        responses = data.batch['responses']
+        response_length = responses.size(-1)
+        attention_mask = data.batch['attention_mask']
+        response_mask = attention_mask[:, -response_length:]
+        advantages, returns = core_algos.compute_reinforce_plus_plus_outcome_advantage(token_level_rewards=token_level_rewards,
+                                                                                      eos_mask=response_mask,
+                                                                                      gamma=gamma)
+        data.batch['advantages'] = advantages
+        data.batch['returns'] = returns
     else:
         raise NotImplementedError
     return data
@@ -504,6 +515,8 @@ class RayPPOTrainer(object):
             self.use_critic = True
         elif self.config.algorithm.adv_estimator == 'grpo':
             self.use_critic = False
+        elif self.config.algorithm.adv_estimator == 'reinforce_plus_plus':
+            self.use_critic = False
         else:
             raise NotImplementedError
 
@@ -680,13 +693,7 @@ class RayPPOTrainer(object):
                                                   adv_estimator=self.config.algorithm.adv_estimator,
                                                   gamma=self.config.algorithm.gamma,
                                                   lam=self.config.algorithm.lam,
-                                                  num_repeat=self.config.actor_rollout_ref.rollout.n,
-                                                  length_weight=self.config.Length_weight.length_weight,
-                                                  correct_score=self.config.Length_weight.correct_score,
-                                                  beta=self.config.Length_weight.beta,
-                                                  p=self.config.Length_weight.p,
-                                                  lamda=self.config.Length_weight.lamda,
-                                                  max_length_threshold=self.config.Length_weight.max_length_threshold)
+                                                  num_repeat=self.config.actor_rollout_ref.rollout.n)
 
                     # update critic
                     if self.use_critic:
