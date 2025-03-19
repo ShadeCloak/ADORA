@@ -1266,11 +1266,11 @@ def weight_func(rewards, response_length, lamda=0.1):
         response_row = response_length[i]  
         response_reward_1 = response_row[reward_row > 0.5]  
         response_reward_not_1 = response_row[(reward_row <= 0.5) & (response_row < 4094)]  
-        mean_reward_1 = response_reward_1.max() if response_reward_1.numel() > 0 else float('-inf')  
+        max_reward_1 = response_reward_1.max() if response_reward_1.numel() > 0 else float('-inf')  
         mean_reward_not_1 = response_reward_not_1.mean() if response_reward_not_1.numel() > 0 else float('inf') 
 
-        if mean_reward_1 > mean_reward_not_1 or response_reward_1.numel() == 0:  
-            weights[i] = 1.0
+        if max_reward_1 > mean_reward_not_1 or response_reward_1.numel() == 0:  
+            pass
         else: 
             weights[i] = lamda
 
