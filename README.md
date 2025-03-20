@@ -80,7 +80,7 @@ To reproduce the experiments of LLM and VLM in the article, you can refer to the
 
 ## One More Thing
 
-ADORA can be implemented in verl or OpenRLHF by modifying only a single function. Still, based on your specific training objectives, you need to define a method to generate advantage weights from the results of actor rollouts. Moreover, you can also choose to incorporate ADORA only at certain stages of RL training. Notably, ADORA demonstrates compatibility and independence, showing seamless integration capabilities with cold-start scenarios and the recently proposed DAPO. We welcome feedback, improvements, and collaboration opportunities to further explore ADORA's potential implementations.
+ADORA can be implemented in `verl` or `OpenRLHF` by modifying only a single function. Still, based on your specific training objectives, you need to define a method to generate advantage weights from the results of actor rollouts. Moreover, you can also choose to incorporate ADORA only at certain stages of RL training. Notably, ADORA demonstrates compatibility and independence, showing seamless integration capabilities with cold-start scenarios and the recently proposed `DAPO`. **We welcome feedback, improvements, and collaboration opportunities to further explore ADORA's potential implementations.**
 
 ## Citation
 
