@@ -81,7 +81,7 @@ If you find this blog or our code useful, we would appreciate it if you could ci
 
 ```bibtex
 @misc{gui2025adora,
-  title={Steering Model How to Reinforcement Learning},
+  title={ADORA: A Scalable Paradigm for Steering Learning Trajectories},
   author={Lujun Gui and Qingnan Ren},
   year={2025},
   howpublished={\url{https://www.notion.so/Steering-Model-How-to-Reinforcement-Learning-1a830cc0904681fa9df3e076b6557a3e}},
