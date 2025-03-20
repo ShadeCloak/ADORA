@@ -96,6 +96,10 @@ If you find this blog or our code useful, we would appreciate it if you could ci
 }
 ```
 
+## Previous Work
+
+[Logic-RL: Unleashing LLM Reasoning with Rule-Based Reinforcement Learning](https://github.com/Unakar/Logic-RL)
+
 ## Acknowledgement
 
 We thank the [verl](https://github.com/volcengine/verl) and [OpenRLHF](https://github.com/OpenRLHF/OpenRLHF) for the awesome open-source RL infrastructure.
