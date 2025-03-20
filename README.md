@@ -2,7 +2,7 @@
 
 <div align="center">
 
-# Advantage Dynamics via Online Rollout Adaptation
+# ADORA: A Scalable Paradigm for Steering Learning Trajectories
 
 [![Hugging Face](https://img.shields.io/badge/ADORA-FFD21E?style=for-the-badge&logo=Huggingface&logoColor=000)](https://huggingface.co/AdoraRL) 
 [![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)](https://five-stetson-b51.notion.site/Steering-Model-How-to-Reinforcement-Learning-1a830cc0904681fa9df3e076b6557a3e) 
@@ -15,12 +15,12 @@ ADORA (Advantage Dynamics via Online Rollout Adaptation) is a reinforcement lear
 
 
 ## News
-- **[2025/03/20]** We release the blog, code repository, and model weights [AdoraRL/Qwen2.5-7B-Instruct-1M-KK-5ppl-100step-ADORA](https://huggingface.co/AdoraRL/Qwen2.5-7B-Instruct-1M-KK-5ppl-100step-ADORA) and [AdoraRL/Qwen2.5-VL-7B-Geo3k-ADORA-v0](https://huggingface.co/AdoraRL/Qwen2.5-VL-7B-Geo3k-ADORA-v0)
+- **[2025/03/20]** We release the blog [ADORA: A Scalable Paradigm for Steering Learning Trajectories](https://five-stetson-b51.notion.site/ADORA-A-Scalable-Paradigm-for-Steering-Learning-Trajectories-1a830cc0904681fa9df3e076b6557a3e), code repository, wandb reports and model weights.
 
 
 ## Key Results
 
-### LogicRL
+### ADORA
 
 Implementing ADORA within the Logic-RL experiments achieved 40 AMC and 8 AIME scores, surpassing the GRPO's 35 and 6 respectively.
 
@@ -44,7 +44,7 @@ Implementing ADORA within the Logic-RL experiments achieved 40 AMC and 8 AIME
 
 
 
-### Geometry
+### ADORA-VL
 
 Training dynamics comparison of GRPO vs ADORA on Qwen2.5-VL-7B-Instruct (geometry3k). GRPO exhibits stagnant response length growth with KL/policy loss outliers. ADORA achieves sustained length expansion with stabilized optimization at the cost of slight training reward degradation. Benchmark results demonstrate GRPO&ADORA's superior in/out-of-domain task performance.
 
