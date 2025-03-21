@@ -2,7 +2,7 @@
 
 <div align="center">
 
-# ADORA: A Scalable Paradigm for Steering Learning Trajectories
+# ADORA: A Scalable Paradigm for Steering RL Trajectories
 
 [![Hugging Face](https://img.shields.io/badge/ADORA-FFD21E?style=for-the-badge&logo=Huggingface&logoColor=000)](https://huggingface.co/AdoraRL) 
 [![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)](https://five-stetson-b51.notion.site/ADORA-A-Scalable-Paradigm-for-Steering-Learning-Trajectories-1a830cc0904681fa9df3e076b6557a3e) 
