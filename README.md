@@ -2,7 +2,7 @@
 
 <div align="center">
 
-# ADORA: Enhancing RL with Advantage Dynamics and Online Rollout Adaptation
+# Training Reasoning Model with Dynamic Advantage Estimation on Reinforcement Learning
 
 [![Hugging Face](https://img.shields.io/badge/ADORA-FFD21E?style=for-the-badge&logo=Huggingface&logoColor=000)](https://huggingface.co/AdoraRL) 
 [![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)](https://www.notion.so/ADORA-Enhancing-RL-with-Advantage-Dynamics-and-Online-Rollout-Adaptation-1a830cc0904681fa9df3e076b6557a3e) 
