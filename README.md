@@ -13,8 +13,8 @@
 
 **ADORA** (Advantage Dynamics via Online Rollout Adaptation) is a reinforcement learning (RL) framework designed to **dynamically adjust advantage values during training based on the model's rollout distribution**. By simple yet effective experiments, it significantly improves long Chain-of-Thought (CoT) reasoning and reflective capabilities in Large Language Models (LLMs) and Vision-Language Models (VLMs). 
 
-For LLMs, our ADORA implementation in the Logic-RL framework achieves 40 AMC with only 100 training steps compared to the original paper's 39 AMC with 1200 steps, while maintaining comparable AIME performance at 8. 
-For VLMs, using only 2K samples from the Geometry3K dataset and starting from Qwen2.5-VL-7B-Instruct, we achieved 73.5% accuracy on MathVista, with consistent response-length progression, setting a new state-of-the-art for the multimodal implementation of DeepSeek-R1-Zero. 
+For LLMs, our ADORA implementation in the Logic-RL framework achieves **40 AMC** with only **100 training steps** compared to the original paper's 39 AMC with 1200 steps, while maintaining comparable AIME performance at 8. 
+For VLMs, using only **2K samples** from the Geometry3K dataset and starting from Qwen2.5-VL-7B-Instruct, we achieved **73.5%** accuracy on MathVista, with **consistent response-length progression**, setting a new **SOTA** for the multimodal implementation of DeepSeek-R1-Zero. 
 
 
 ## News
