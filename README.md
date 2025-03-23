@@ -5,7 +5,7 @@
 # Training Reasoning Model with Dynamic Advantage Estimation on Reinforcement Learning
 
 [![Hugging Face](https://img.shields.io/badge/ADORA-FFD21E?style=for-the-badge&logo=Huggingface&logoColor=000)](https://huggingface.co/AdoraRL) 
-[![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)](https://www.notion.so/ADORA-Enhancing-RL-with-Advantage-Dynamics-and-Online-Rollout-Adaptation-1a830cc0904681fa9df3e076b6557a3e) 
+[![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)](https://www.notion.so/Training-Reasoning-Model-with-Dynamic-Advantage-Estimation-on-Reinforcement-Learning-1a830cc0904681fa9df3e076b6557a3e) 
 [![Wandb LLM](https://img.shields.io/badge/WandbLLM-FFBE00?style=for-the-badge&logo=weightsandbiases&logoColor=000)](https://wandb.ai/luc4lj/reft-exp/reports/K-K-5ppl-GRPO-ADORA--VmlldzoxMTg3NDU5OA) 
 [![Wandb VLM](https://img.shields.io/badge/WandbVLM-FFBE00?style=for-the-badge&logo=weightsandbiases&logoColor=000)](https://wandb.ai/luc4lj/Qwen2.5-VL-7B-ppo-training/reports/Geometry3k-GRPO-ADORA--VmlldzoxMTg3NDQ3Mw?accessToken=t55aoj526rzc18n2kvum46vr0b6y8bjxmvbnls0829ekfezuta9l6so0bjxq7kyv) 
 
@@ -18,14 +18,14 @@ For VLMs, using only **2K samples** from the Geometry3K dataset and starting fro
 
 
 ## News
-- **[2025/03/20]** We release the blog [ADORA: Enhancing RL with Advantage Dynamics and Online Rollout Adaptation](https://www.notion.so/ADORA-Enhancing-RL-with-Advantage-Dynamics-and-Online-Rollout-Adaptation-1a830cc0904681fa9df3e076b6557a3e), code repository, wandb reports and model weights [AdoraRL](https://huggingface.co/AdoraRL).
+- **[2025/03/20]** We release the blog [Training Reasoning Model with Dynamic Advantage Estimation on Reinforcement Learning](https://www.notion.so/Training-Reasoning-Model-with-Dynamic-Advantage-Estimation-on-Reinforcement-Learning-1a830cc0904681fa9df3e076b6557a3e), code repository, wandb reports and model weights [AdoraRL](https://huggingface.co/AdoraRL).
 
 
 ## Key Results
 
 ### ADORA
 
-Implementing ADORA within the Logic-RL experiments achieved 40 AMC and 8 AIME scores, surpassing the GRPO's 35 and 6 respectively.
+Implementing ADORA within the Logic-RL experiments achieved **40 AMC** and **8 AIME** scores, surpassing the GRPO's 35 and 6 respectively.
 
 <div align="center">
 <img src="./docs/adora.png" width="700" alt="adora-figure_00">
@@ -49,7 +49,7 @@ Implementing ADORA within the Logic-RL experiments achieved 40 AMC and 8 AIME
 
 ### ADORA-VL
 
-Training dynamics comparison of GRPO vs ADORA on Qwen2.5-VL-7B-Instruct (geometry3k). GRPO exhibits stagnant response length growth with KL/policy loss outliers. ADORA achieves sustained length expansion with stabilized optimization at the cost of slight training reward degradation. Benchmark results demonstrate GRPO&ADORA's superior in/out-of-domain task performance.
+Training dynamics comparison of GRPO vs ADORA on Qwen2.5-VL-7B-Instruct (geometry3k). GRPO exhibits **stagnant response length growth** with **KL/policy loss outliers**. ADORA achieves **sustained length expansion** with stabilized optimization at the cost of slight training reward degradation. Benchmark results demonstrate GRPO&ADORA's superior in/out-of-domain task performance.
 
 <div align="center">
 <img src="./docs/adora_vl.png" width="700" alt="adora-figure_01">
@@ -88,10 +88,10 @@ If you find this blog or our code useful, we would appreciate it if you could ci
 
 ```bibtex
 @misc{gui2025adora,
-  title={ADORA: Enhancing RL with Advantage Dynamics and Online Rollout Adaptation},
+  title={Training Reasoning Model with Dynamic Advantage Estimation on Reinforcement Learning},
   author={Lujun Gui and Qingnan Ren},
   year={2025},
-  howpublished={\url{https://www.notion.so/ADORA-Enhancing-RL-with-Advantage-Dynamics-and-Online-Rollout-Adaptation-1a830cc0904681fa9df3e076b6557a3e}},
+  howpublished={\url{https://www.notion.so/Training-Reasoning-Model-with-Dynamic-Advantage-Estimation-on-Reinforcement-Learning-1a830cc0904681fa9df3e076b6557a3e}},
   note={Notion Blog},
 }
 ```
