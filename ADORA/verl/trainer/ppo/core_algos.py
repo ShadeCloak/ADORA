@@ -155,6 +155,7 @@ def compute_grpo_outcome_advantage_ADORA(
                 'pos_count': pos_mask.sum().item(),
                 'pos_lengths': pos_lengths,
                 'neg_lengths': neg_lengths,
+                'length_advantage': (max_pos > mean_neg),
                 'max_pos': max_pos,
                 'mean_neg': mean_neg
             }

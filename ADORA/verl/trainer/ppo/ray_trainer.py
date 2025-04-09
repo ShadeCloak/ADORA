@@ -693,7 +693,11 @@ class RayPPOTrainer(object):
                                                   adv_estimator=self.config.algorithm.adv_estimator,
                                                   gamma=self.config.algorithm.gamma,
                                                   lam=self.config.algorithm.lam,
-                                                  num_repeat=self.config.actor_rollout_ref.rollout.n)
+                                                  num_repeat=self.config.actor_rollout_ref.rollout.n,
+                                                  length_weight=self.config.Length_weight.length_weight,
+                                                  correct_score=self.config.Length_weight.correct_score,
+                                                  lamda=self.config.Length_weight.lamda,
+                                                  max_length_threshold=self.config.Length_weight.max_length_threshold)
 
                     # update critic
                     if self.use_critic:
