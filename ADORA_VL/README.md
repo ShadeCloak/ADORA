@@ -25,6 +25,22 @@ cd ADORA
 bash ADORA_VL/examples/scripts/qwen25vl_7b_geo3k_adora.sh
 ~~~
 
+### Evaluation
+
+We use [VLMEvalKit](https://github.com/open-compass/VLMEvalKit) for evaluation, and simply need to write the following configuration into the config.py file.
+
+~~~python  
+    "Qwen2.5-VL-7B-Geo3k-ADORA-v0": partial(
+        Qwen2VLChat,
+        model_path="AdoraRL/Qwen2.5-VL-7B-Geo3k-ADORA-v0",
+        min_pixels=3136,
+        max_pixels=12845056,
+        system_prompt="Please reason step by step, and put your final answer within \boxed{}.",
+    ),
+~~~
+
+The evaluation results for MathVista are displayed in `ADORA/ADORA_VL/docs/math_results.xlsx`.
+
 ##  Weight Function
 In the blog, weight_func is defined as follows, feel free to modify it according to your own scenario.
 ~~~python  
